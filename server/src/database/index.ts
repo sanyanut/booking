@@ -1,7 +1,5 @@
 import { MongoClient } from "mongodb";
-import { Database } from "../lib/types";
-// Note: Need to add appropriate credentials here to make the connection
-// Note #2: Database credentials should never be committed to source code!
+import { Database, Booking, Listing, User } from "../lib/types";
 
 
 const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_USER_PASSWORD}@${process.env.DB_CLUSTER}.mongodb.net`;
@@ -14,7 +12,9 @@ export const connectDatabase = async (): Promise<Database> => {
   const db = client.db("main");
 
   return {
-    listings: db.collection("test_listings")
+    bookings: db.collection('bookings'),
+    listings: db.collection<Listing>("listings"),
+    users: db.collection<User>("users")
   };
 };
 
